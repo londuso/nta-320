@@ -14,3 +14,6 @@ yum install -y nagios nrpe nagios-plugins-load nagios-plugins-ping nagios-disk n
  sed -i "s,command[check_hda1]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /dev/hda1,command[check_disk]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p
  /dev/sda1,g" /etc/nagios/nrpe.cfg
  systemctl restart nrpe
+
+#troubleshooting
+#from nagios server: /usr/lib64/nagios/plugins/check_nrpe -H 10.0.0.3 -c check_load from NRPE server execute the command in libexec /usr/lib64/nagios/plugins
