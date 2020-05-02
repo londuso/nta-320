@@ -1,0 +1,14 @@
+#!/bin/bash
+yum install -y nagios nrpe nagios-plugins-load nagios-plugins-ping nagios-disk nagios-plugins-procs wget
+ #BUG:https//osric.com/chris/accidental-developer/2016/12/missing-nagios-plugins-in-centos-7/ (nrpe plugins have been packaged seperately and dont install with nagios-
+ plugins-all
+ BUG:#2 https://cloudwafer.com/blog/installing-nagios-agent-npre-on-centos/ (the nrpe config is commented out and checks are not defined)
+ # use sed statements to uncomment NRPE config and add the appropriate flags
+ # add in command [check_mem]=/usr/lib64/nagios/plugins/check_mem.sh
+ # Install custom mem monitor
+ wget -o /usr/lib64/nagios/plugins/check_mem.sh https://raw.gethubusercontent.com/nic-instruction/hello-nti-320/master/check_mem.sh
+ chmod +x /usr/lib64/nagios/plugins/check_mem.sh
+ systemctl enable nrpe
+ systemctl start nrpe
+ sed -i 's/allowed_hosts=127.0.0.1/allowed_hosts=127.0.0.1,10.142.0.15/g' /etc/nagios/nrpe.cfg
+ sed -i "s,command[check_hda1]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /dev
