@@ -1,4 +1,6 @@
 #!/bin/bash
+chmod 775 /etc/nagios/servers # added this from slack
+usermod -a -G root londuso35 (where nicolebade is your username) #added from slack.
 yum install -y nagios-plugins nrpe nagios-plugins-load nagios-plugins-ping nagios-plugins-disk nagios-plugins-httpd nagios-plugins-procs wget 
 # BUG:https://osric.com/chris/accidental-developer/2016/12/missing-nagios-plugins-in-centos-7/ (nrpe plugins have been packaged seperately and don't install with nagios-
 plugins-all)
@@ -18,4 +20,5 @@ echo "command [check_disk]=/usr/lib64/nagios/plugins/check_mem -w 80% -c 90%" >>
 systemctl restart nrpe
 #troubleshooting
 #from nagios server: /usr/lib64/nagios/plugins/check_nrpe -H 10.0.0.3 -c check_load from NRPE server execute the command in libexec /usr/lib64/nagios/plugins/
+chmod 775 /etc/nagios/servers
 
